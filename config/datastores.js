@@ -12,10 +12,11 @@
  * For more information on configuring datastores, check out:
  * https://sailsjs.com/config/datastores
  */
+const config = require('./local');
 
 module.exports.datastores = {
 
-	
+
   /***************************************************************************
    *                                                                          *
    * Your app's default datastore.                                            *
@@ -49,7 +50,7 @@ module.exports.datastores = {
      *                                                                          *
      ***************************************************************************/
     adapter: 'sails-mysql',
-    url: 'sails.config.mysqlAdapter',
+    url: config.mysqlAdapter,
 
   },
 
