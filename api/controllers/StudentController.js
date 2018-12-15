@@ -7,10 +7,15 @@
 
 let moment = require('moment');
 
+let parameter = {
+	email	: 'email',
+	password: 'password'
+}
+
 module.exports = {
 	login: (req, res) => {
-		let email = req.param('email');
-		let password = req.param('password');
+		let email 	 = req.param(parameter.email);
+		let password = req.param(parameter.password);
 		
 		//untuk login, email dan password harus di isi
 		if (!email || !password) {
@@ -19,8 +24,8 @@ module.exports = {
 			 * kode 401 merepresentasikan `not found`
 			 */
 			return res.status(401).json({
-				code: 401,
-				message: 'email or password required'
+				status: 401,
+				message: sails.config.helper.errMessage[401]
 			});
 		}
 
@@ -30,8 +35,8 @@ module.exports = {
 			 * yang dimasukkan terdaftar didalam database atau tidak
 			 */
 			if (!student) res.status(401).json({
-				code: 401,
-				message: 'email or password required'
+				status: 401,
+				message: sails.config.helper.errMessage[401]
 			});
 
 			/**
@@ -46,8 +51,8 @@ module.exports = {
 				 * kode 403 merepresentasikan `forbidden`
 				 */
 				if (err) return res.status(403).json({
-					code: 403,
-					message: 'email or password required'
+					status: 403,
+					message: sails.config.helper.errMessage[403]
 				});
 
 				/**
@@ -56,18 +61,19 @@ module.exports = {
 				 */
 				if (!valid) {
 					return res.status(401).json({
-						code: 401,
-						message: 'email or password required'
+						status: 401,
+						message: sails.config.helper.errMessage[401]
 					});
 				} else {
 					//konversi format yang readble untuk createdAt dan updatedAt
-					student.createdAt = moment(student.createdAt).format('YYYY-MM-DD h:mm:ss a');
-					student.updatedAt = moment(student.updatedAt).format('YYYY-MM-DD h:mm:ss a');
+					let dateFormat = sails.config.dateFormat;
+					student.createdAt = moment(student.createdAt).format(dateFormat);
+					student.updatedAt = moment(student.updatedAt).format(dateFormat);
 					/**
 					 * jika login berhasil, tampilkan response OK dengan kode 200.
 					 */
 					return res.status(200).json({
-						code: 200,
+						status: 200,
 						student: student,
 						token: jwToken.issue({id: student.id})
 					});
@@ -87,15 +93,15 @@ module.exports = {
 			 */
 			if (err) {
 				return res.status(500).json({
-					code: err.status,
+					status: err.status,
 					message: err
 				});
 			} else {
 				/**
 				 * registrasi berhasil!
 				 */
-				res.status(200).json({
-					code: 200,
+				return res.status(200).json({
+					status: 200,
 					student: student,
 					token: jwToken.issue({id: student.id})
 				});
