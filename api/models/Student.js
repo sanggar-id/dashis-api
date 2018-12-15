@@ -4,8 +4,8 @@
  * @description :: A model definition.  Represents a database table/collection/etc.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
-var bcrypt = require('bcrypt');
-var uuid = require('node-uuid');
+let bcrypt = require('bcrypt');
+let uuid = require('node-uuid');
 
 module.exports = {
 

@@ -12,6 +12,7 @@
     "bcrypt": "^1.0.3",
     "grunt": "^1.0.3",
     "jsonwebtoken": "^8.4.0",
+    "moment": "^2.23.0",
     "node-uuid": "^1.4.8",
     "sails": "^1.0.2",
     "sails-hook-grunt": "^3.0.2",

@@ -5,6 +5,8 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
+let moment = require('moment');
+
 module.exports = {
 	login: (req, res) => {
 		let email = req.param('email');
@@ -58,6 +60,9 @@ module.exports = {
 						message: 'email or password required'
 					});
 				} else {
+					//konversi format yang readble untuk createdAt dan updatedAt
+					student.createdAt = moment(student.createdAt).format('YYYY-MM-DD h:mm:ss a');
+					student.updatedAt = moment(student.updatedAt).format('YYYY-MM-DD h:mm:ss a');
 					/**
 					 * jika login berhasil, tampilkan response OK dengan kode 200.
 					 */
