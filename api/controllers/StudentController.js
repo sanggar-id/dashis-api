@@ -69,6 +69,31 @@ module.exports = {
 				}
 			});
 		});
+	},
+	register = (req, res) => {
+		/**
+		 * student registration berdasarkan-
+		 * body dan table yang ada di model
+		 */
+		Student.create(req.body).exec((err, student) => {
+			/**
+			 * jika registrasi gagal, tampilkan error response
+			 * yang dinamis
+			 */
+			if (err) return res.json(err.status, {
+				code: err.status,
+				message: err
+			});
+
+			/**
+			 * registrasi berhasil!
+			 */
+			if (student) return res.json(200, {
+				code: 200,
+				mahasiswa: student,
+				token: jwToken.issue({id: student.id})
+			});
+		});
 	}
 };
 

@@ -18,5 +18,10 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
+  'StudentController': {
+	  '*': 'isAuthorized',
+	  'login': true,
+	  'register': true
+  }
 
 };
