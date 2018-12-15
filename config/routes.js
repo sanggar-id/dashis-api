@@ -38,6 +38,11 @@ module.exports.routes = {
     action: 'register'
   },
 
+  'GET /api/v1/mahasiswa/:uuid': {
+    controller: 'StudentController',
+    action: 'getByUuid'
+  }
+
   /***************************************************************************
    *                                                                          *
    * More custom routes here...                                               *

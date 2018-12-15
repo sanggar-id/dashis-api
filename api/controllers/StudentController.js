@@ -8,6 +8,7 @@
 let moment = require('moment');
 
 let parameter = {
+	uuid	: 'uuid',
 	email	: 'email',
 	password: 'password'
 }
@@ -65,10 +66,6 @@ module.exports = {
 						message: sails.config.helper.errMessage[401]
 					});
 				} else {
-					//konversi format yang readble untuk createdAt dan updatedAt
-					let dateFormat = sails.config.dateFormat;
-					student.createdAt = moment(student.createdAt).format(dateFormat);
-					student.updatedAt = moment(student.updatedAt).format(dateFormat);
 					/**
 					 * jika login berhasil, tampilkan response OK dengan kode 200.
 					 */
@@ -97,6 +94,11 @@ module.exports = {
 					message: err
 				});
 			} else {
+				//konversi format yang readble untuk createdAt dan updatedAt
+				let dateFormat = sails.config.dateFormat;
+				student.createdAt = moment(student.createdAt).format(dateFormat);
+				student.updatedAt = moment(student.updatedAt).format(dateFormat);
+
 				/**
 				 * registrasi berhasil!
 				 */
@@ -107,6 +109,20 @@ module.exports = {
 				});
 			}
 		});
+	},
+	
+	/**
+	 * @Test
+	 * @Status {pass}
+	 */
+	getByUuid: async (req, res) => {
+		let uuid = req.param(parameter.uuid);
+		await Student.findOne({uuid: uuid}, (err, student) => {
+			return res.status(200).json({
+				status: 200,
+				student: student
+			});
+		})
 	}
 };
 

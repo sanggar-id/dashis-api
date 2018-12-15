@@ -21,7 +21,8 @@ module.exports.policies = {
   'StudentController': {
 	  '*': 'isAuthorized',
 	  'login': true,
-	  'register': true
+    'register': true,
+    'getByUuid': true
   }
 
 };
