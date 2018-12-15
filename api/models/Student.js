@@ -15,15 +15,13 @@ module.exports = {
     id          : { type: 'number', autoIncrement: true },
     name        : { type: 'string' },
     email       : { type: 'string', unique: true },
-    password    : { type: 'string' },
-    createdAt   : { type: 'number', autoCreatedAt: true },
-    updatedAt   : { type: 'number', autoUpdatedAt: true },
+    password    : { type: 'string' }
 
   },
   
     //ketika kueri ke student, jangan tampilkan data yang sensitif
     customToJSON: function () {
-        return _.omit(this, ['id', 'name', 'email', 'createdAt'])
+        return _.omit(this, ['password'])
     },
 
     //encrypt password menggunakan bcrypt

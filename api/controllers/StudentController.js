@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-	login = (req, res) => {
+	login: (req, res) => {
 		let email = req.param('email');
 		let password = req.param('password');
 		
@@ -16,7 +16,7 @@ module.exports = {
 			 * jika kosong, tampilkan respon berikut dengan kode 401
 			 * kode 401 merepresentasikan `not found`
 			 */
-			return res.json(401, {
+			return res.status(401).json({
 				code: 401,
 				message: 'email or password required'
 			});
@@ -27,7 +27,7 @@ module.exports = {
 			 * validasi dibawah untuk mengecek, apakah user dengan `email`
 			 * yang dimasukkan terdaftar didalam database atau tidak
 			 */
-			if (!student) return res.json(401, {
+			if (!student) res.status(401).json({
 				code: 401,
 				message: 'email or password required'
 			});
@@ -43,7 +43,7 @@ module.exports = {
 				 * tidak sama yang ada di database.
 				 * kode 403 merepresentasikan `forbidden`
 				 */
-				if (err) return res.json(403, {
+				if (err) return res.status(403).json({
 					code: 403,
 					message: 'email or password required'
 				});
@@ -53,7 +53,7 @@ module.exports = {
 				 * tidak dapat di bypass.
 				 */
 				if (!valid) {
-					return res.json(401, {
+					return res.status(401).json({
 						code: 401,
 						message: 'email or password required'
 					});
@@ -61,38 +61,40 @@ module.exports = {
 					/**
 					 * jika login berhasil, tampilkan response OK dengan kode 200.
 					 */
-					return res.json(200, {
+					return res.status(200).json({
 						code: 200,
-						mahasiswa: student,
+						student: student,
 						token: jwToken.issue({id: student.id})
 					});
 				}
 			});
 		});
 	},
-	register = (req, res) => {
+	register: async (req, res) => {
 		/**
 		 * student registration berdasarkan-
 		 * body dan table yang ada di model
 		 */
-		Student.create(req.body).exec((err, student) => {
+		await Student.create(req.body).fetch().exec((err, student) => {
 			/**
 			 * jika registrasi gagal, tampilkan error response
 			 * yang dinamis
 			 */
-			if (err) return res.json(err.status, {
-				code: err.status,
-				message: err
-			});
-
-			/**
-			 * registrasi berhasil!
-			 */
-			if (student) return res.json(200, {
-				code: 200,
-				mahasiswa: student,
-				token: jwToken.issue({id: student.id})
-			});
+			if (err) {
+				return res.status(500).json({
+					code: err.status,
+					message: err
+				});
+			} else {
+				/**
+				 * registrasi berhasil!
+				 */
+				res.status(200).json({
+					code: 200,
+					student: student,
+					token: jwToken.issue({id: student.id})
+				});
+			}
 		});
 	}
 };
