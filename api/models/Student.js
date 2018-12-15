@@ -5,6 +5,7 @@
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
 var bcrypt = require('bcrypt');
+var uuid = require('node-uuid');
 
 module.exports = {
 
@@ -13,19 +14,23 @@ module.exports = {
   attributes: {
 
     id          : { type: 'number', autoIncrement: true },
+    uuid        : { type: 'string' },
     name        : { type: 'string' },
     email       : { type: 'string', unique: true },
-    password    : { type: 'string' }
+    password    : { type: 'string' },
+    createdAt   : { type: 'string', autoCreatedAt: true, },
+    updatedAt   : { type: 'string', autoUpdatedAt: true, },
 
   },
   
     //ketika kueri ke student, jangan tampilkan data yang sensitif
     customToJSON: function () {
-        return _.omit(this, ['password'])
+        return _.omit(this, ['password', 'id'])
     },
 
     //encrypt password menggunakan bcrypt
     beforeCreate: function (values, next) {
+        values.uuid = uuid.v4();
         bcrypt.genSalt(10, function (err, salt) {
         if (err) return next(err);
         bcrypt.hash(values.password, salt, function (err, hash) {
