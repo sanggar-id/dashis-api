@@ -48,6 +48,11 @@ module.exports.routes = {
         action: 'getByUuid'
     },
 
+    'POST /api/v1/insis/new': {
+        controller: 'InsisController',
+        action: 'post'
+    },
+
   /***************************************************************************
    *                                                                          *
    * More custom routes here...                                               *

@@ -19,10 +19,14 @@ module.exports.policies = {
 
   // '*': true,
   'StudentController': {
-	  '*': 'isAuthorized',
-	  'login': true,
+	'*': 'isAuthorized',
+	'login': true,
     'register': true,
     'getByUuid': true
-  }
+  },
+
+    'InsisController': {
+        '*': 'isAuthorized',
+    }
 
 };
