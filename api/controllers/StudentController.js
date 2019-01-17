@@ -8,10 +8,10 @@
 let moment = require('moment');
 
 let parameter = {
-	uuid	: 'uuid',
-	email	: 'email',
-	password: 'password'
-}
+	uuid		: 'uuid',
+	email		: 'email',
+	password	: 'password'
+};
 
 module.exports = {
 	login: (req, res) => {
@@ -94,7 +94,7 @@ module.exports = {
 					message: err
 				});
 			} else {
-				//konversi format yang readble untuk createdAt dan updatedAt
+				//konversi format yang readable untuk createdAt dan updatedAt
 				let dateFormat = sails.config.dateFormat;
 				student.createdAt = moment(student.createdAt).format(dateFormat);
 				student.updatedAt = moment(student.updatedAt).format(dateFormat);
@@ -112,7 +112,7 @@ module.exports = {
 	},
 	
 	/**
-	 * @Test
+	 * Get user by uuid
 	 * @Status {pass}
 	 */
 	getByUuid: async (req, res) => {
@@ -120,7 +120,11 @@ module.exports = {
 		await Student.findOne({uuid: uuid}, (err, student) => {
 			return res.status(200).json({
 				status: 200,
-				student: student
+				student: {
+					createdAt: student.createdAt,
+					updatedAt: student.updatedAt,
+					name: student.name
+				}
 			});
 		})
 	}

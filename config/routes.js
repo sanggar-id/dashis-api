@@ -41,7 +41,12 @@ module.exports.routes = {
   'GET /api/v1/mahasiswa/:uuid': {
     controller: 'StudentController',
     action: 'getByUuid'
-  }
+  },
+
+    'GET /api/v1/insis/:uuid': {
+        controller: 'InsisController',
+        action: 'getByUuid'
+    },
 
   /***************************************************************************
    *                                                                          *
