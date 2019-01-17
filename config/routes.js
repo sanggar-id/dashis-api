@@ -50,7 +50,7 @@ module.exports.routes = {
 
     'POST /api/v1/insis/new': {
         controller: 'InsisController',
-        action: 'post'
+        action: 'addNew'
     },
 
   /***************************************************************************

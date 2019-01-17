@@ -7,7 +7,7 @@
 let moment = require('moment');
 
 module.exports = {
-    post: async (req, res) => {
+    addNew: async (req, res) => {
         /**
          * menambahkan nilai baru untuk matakuliah:
          * Integrasi Sistem
