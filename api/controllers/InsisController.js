@@ -7,7 +7,7 @@
 let moment = require('moment');
 
 module.exports = {
-    addNew: async (req, res) => {
+    newInsis: async (req, res) => {
         /**
          * menambahkan nilai baru untuk matakuliah:
          * Integrasi Sistem
@@ -43,9 +43,9 @@ module.exports = {
      * Get user by uuid
      * @Status {pass}
      */
-    getByUuid: async (req, res) => {
-        let uuid = req.param(parameter.uuid);
-        await Insis.findOne({uuid: uuid}, (err, insis) => {
+    getByStudentId: async (req, res) => {
+        let uuid = req.param('student_id');
+        await Insis.find({student_id: uuid}, (err, insis) => {
             return res.status(200).json({
                 status: 200,
                 value: insis

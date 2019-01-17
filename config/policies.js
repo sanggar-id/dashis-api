@@ -25,8 +25,4 @@ module.exports.policies = {
     'getByUuid': true
   },
 
-    'InsisController': {
-        '*': 'isAuthorized',
-    }
-
 };

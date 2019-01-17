@@ -43,14 +43,14 @@ module.exports.routes = {
     action: 'getByUuid'
   },
 
-    'GET /api/v1/insis/:uuid': {
+    'GET /api/v1/insis/:student_id': {
         controller: 'InsisController',
-        action: 'getByUuid'
+        action: 'getByStudentId'
     },
 
     'POST /api/v1/insis/new': {
         controller: 'InsisController',
-        action: 'addNew'
+        action: 'newInsis'
     },
 
   /***************************************************************************

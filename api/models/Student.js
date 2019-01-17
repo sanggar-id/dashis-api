@@ -25,7 +25,7 @@ module.exports = {
   
     //ketika kueri ke student, jangan tampilkan data yang sensitif
     customToJSON: function () {
-        return _.omit(this, ['password', 'id'])
+        return _.omit(this, ['password'])
     },
 
     //encrypt password menggunakan bcrypt
